@@ -23,11 +23,11 @@ import UIKit
 
 extension UIScreen {
     
-    var minSideSize: CGFloat {
+    class func getMinSideSize() -> CGFloat {
         return min(UIScreen.main.bounds.width, UIScreen.main.bounds.height)
     }
     
-    var widthLessThanHeight: Bool {
+    class func widthLessThanHeight() -> Bool {
         return UIScreen.main.bounds.width < UIScreen.main.bounds.height
     }
 }

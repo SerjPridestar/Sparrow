@@ -23,7 +23,7 @@ import UIKit
 
 struct SPDeviceOrientation {
     
-    static var isPortraitOrienation: Bool {
+    static func isPortraitOrienation() -> Bool {
         var isPortraitOrientation = true
         if UIDevice.current.orientation.isValidInterfaceOrientation {
             if UIDevice.current.orientation.isPortrait {

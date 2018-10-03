@@ -21,22 +21,24 @@
 
 import UIKit
 
-public class SPTableViewCell<ContentView: UIView>: UITableViewCell {
-    
-    let view = ContentView.init()
+extension NSLayoutConstraint {
 
-	public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.backgroundColor = UIColor.clear
-        self.addSubview(view)
-    }
-    
-    required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override public func layoutSubviews() {
-        super.layoutSubviews()
-        self.view.setEqualsFrameFromBounds(self)
-    }
+    /*func setMultiplier(multiplier:CGFloat) -> NSLayoutConstraint {
+        NSLayoutConstraint.deactivate([self])
+        let newConstraint = NSLayoutConstraint(
+            item: firstItem,
+            attribute: firstAttribute,
+            relatedBy: relation,
+            toItem: secondItem,
+            attribute: secondAttribute,
+            multiplier: multiplier,
+            constant: constant)
+        
+        newConstraint.priority = priority
+        newConstraint.shouldBeArchived = self.shouldBeArchived
+        newConstraint.identifier = self.identifier
+        
+        NSLayoutConstraint.activate([newConstraint])
+        return newConstraint
+    }*/
 }

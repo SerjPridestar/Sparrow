@@ -19,24 +19,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import UIKit
+import Foundation
 
-public class SPTableViewCell<ContentView: UIView>: UITableViewCell {
+@objc protocol SPSegmentControlCellStyleDelegate {
     
-    let view = ContentView.init()
-
-	public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.backgroundColor = UIColor.clear
-        self.addSubview(view)
-    }
+    @objc optional func selectedState(segmentControlCell: SPSegmentedControlCell, forIndex index: Int)
     
-    required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override public func layoutSubviews() {
-        super.layoutSubviews()
-        self.view.setEqualsFrameFromBounds(self)
-    }
+    @objc optional func normalState(segmentControlCell: SPSegmentedControlCell,  forIndex index: Int)
 }

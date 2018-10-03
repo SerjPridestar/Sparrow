@@ -27,43 +27,177 @@ public struct SPConstraintsAssistent {
         subView.translatesAutoresizingMaskIntoConstraints = false;
         let topMarginConstraint = NSLayoutConstraint(
             item: subView,
-            attribute: NSLayoutAttribute.topMargin,
-            relatedBy: NSLayoutRelation.equal,
+			attribute: NSLayoutConstraint.Attribute.topMargin,
+			relatedBy: NSLayoutConstraint.Relation.equal,
             toItem: superVuew,
-            attribute: NSLayoutAttribute.top,
+			attribute: NSLayoutConstraint.Attribute.top,
             multiplier: 1,
             constant: 0)
         
         let bottomMarginConstraint = NSLayoutConstraint(
             item: subView,
-            attribute: NSLayoutAttribute.bottomMargin,
-            relatedBy: NSLayoutRelation.equal,
+			attribute: NSLayoutConstraint.Attribute.bottomMargin,
+			relatedBy: NSLayoutConstraint.Relation.equal,
             toItem: superVuew,
-            attribute: NSLayoutAttribute.bottom,
+			attribute: NSLayoutConstraint.Attribute.bottom,
             multiplier: 1,
             constant: 0)
         
         let leadingMarginConstraint = NSLayoutConstraint(
             item: subView,
-            attribute: NSLayoutAttribute.leadingMargin,
-            relatedBy: NSLayoutRelation.equal,
+			attribute: NSLayoutConstraint.Attribute.leadingMargin,
+			relatedBy: NSLayoutConstraint.Relation.equal,
             toItem: superVuew,
-            attribute: NSLayoutAttribute.leading,
+			attribute: NSLayoutConstraint.Attribute.leading,
             multiplier: 1,
             constant: 0)
         
         let trailingMarginConstraint = NSLayoutConstraint(
             item: subView,
-            attribute: NSLayoutAttribute.trailingMargin,
-            relatedBy: NSLayoutRelation.equal,
+			attribute: NSLayoutConstraint.Attribute.trailingMargin,
+			relatedBy: NSLayoutConstraint.Relation.equal,
             toItem: superVuew,
-            attribute: NSLayoutAttribute.trailing,
+			attribute: NSLayoutConstraint.Attribute.trailing,
             multiplier: 1,
             constant: 0)
         
         superVuew.addConstraints([
             topMarginConstraint, bottomMarginConstraint, leadingMarginConstraint, trailingMarginConstraint
             ])
+    }
+    
+    static func setMarginConstraint(_ subView: UIView, superVuew: UIView, top: CGFloat, bottom: CGFloat, leading: CGFloat, trailing: CGFloat) {
+        subView.translatesAutoresizingMaskIntoConstraints = false;
+        let topMarginConstraint = NSLayoutConstraint(
+            item: subView,
+			attribute: NSLayoutConstraint.Attribute.topMargin,
+			relatedBy: NSLayoutConstraint.Relation.equal,
+            toItem: superVuew,
+			attribute: NSLayoutConstraint.Attribute.top,
+            multiplier: 1,
+            constant: top)
+        
+        let bottomMarginConstraint = NSLayoutConstraint(
+            item: subView,
+			attribute: NSLayoutConstraint.Attribute.bottomMargin,
+			relatedBy: NSLayoutConstraint.Relation.equal,
+            toItem: superVuew,
+			attribute: NSLayoutConstraint.Attribute.bottom,
+            multiplier: 1,
+            constant: -bottom)
+        
+        let leadingMarginConstraint = NSLayoutConstraint(
+            item: subView,
+			attribute: NSLayoutConstraint.Attribute.leadingMargin,
+			relatedBy: NSLayoutConstraint.Relation.equal,
+            toItem: superVuew,
+			attribute: NSLayoutConstraint.Attribute.leading,
+            multiplier: 1,
+            constant: leading)
+        
+        let trailingMarginConstraint = NSLayoutConstraint(
+            item: subView,
+			attribute: NSLayoutConstraint.Attribute.trailingMargin,
+			relatedBy: NSLayoutConstraint.Relation.equal,
+            toItem: superVuew,
+			attribute: NSLayoutConstraint.Attribute.trailing,
+            multiplier: 1,
+            constant: -trailing)
+        
+        superVuew.addConstraints([
+            topMarginConstraint, bottomMarginConstraint, leadingMarginConstraint, trailingMarginConstraint
+            ])
+    }
+    
+    static func setXCenteringConstraint(_ subView: UIView, superView: UIView) -> NSLayoutConstraint {
+        subView.translatesAutoresizingMaskIntoConstraints = false;
+        
+        let centerXConstraint = NSLayoutConstraint(
+            item: subView,
+            attribute: .centerX,
+            relatedBy: .equal,
+            toItem: superView,
+            attribute: .centerX,
+            multiplier: 1, constant: 0
+        )
+        superView.addConstraints([centerXConstraint])
+        return centerXConstraint
+    }
+    
+    static func setYCenteringConstraint(_ subView: UIView, superView: UIView) -> NSLayoutConstraint {
+        subView.translatesAutoresizingMaskIntoConstraints = false;
+        let centerYConstraint = NSLayoutConstraint(
+            item: subView,
+            attribute: .centerY,
+            relatedBy: .equal,
+            toItem: superView,
+            attribute: .centerY,
+            multiplier: 1, constant: 0
+        )
+        superView.addConstraints([centerYConstraint])
+        return centerYConstraint
+    }
+    
+	static func setMaxSide(_ side: NSLayoutConstraint.Attribute, on view: UIView, value: CGFloat) -> NSLayoutConstraint {
+        let constraint = NSLayoutConstraint(
+            item: view,
+            attribute: side,
+            relatedBy: .lessThanOrEqual,
+            toItem: nil,
+            attribute: .notAnAttribute,
+            multiplier: 1, constant: value
+        )
+        view.addConstraints([constraint])
+        return constraint
+
+    }
+    
+    static func setWidth(width: CGFloat, andHeight height: CGFloat, toView view: UIView) {
+        let widthConstraint = NSLayoutConstraint(
+            item: view,
+			attribute: NSLayoutConstraint.Attribute.width,
+			relatedBy: NSLayoutConstraint.Relation.equal,
+            toItem: nil,
+			attribute: NSLayoutConstraint.Attribute.notAnAttribute,
+            multiplier: 1,
+            constant: width
+        )
+        let heightConstraint = NSLayoutConstraint(
+            item: view,
+			attribute: NSLayoutConstraint.Attribute.height,
+			relatedBy: NSLayoutConstraint.Relation.equal,
+            toItem: nil,
+			attribute: NSLayoutConstraint.Attribute.notAnAttribute,
+            multiplier: 1,
+            constant: height
+        )
+        view.addConstraints([widthConstraint, heightConstraint])
+    }
+    
+	static func attachView(_ view: UIView, to superView: UIView, side: NSLayoutConstraint.Attribute) -> NSLayoutConstraint {
+        let constraint = NSLayoutConstraint.init(
+            item: view,
+            attribute: side,
+			relatedBy: NSLayoutConstraint.Relation.equal,
+            toItem: superView,
+            attribute: side,
+            multiplier: 1,
+            constant: 0
+        )
+        return constraint
+    }
+    
+	static func equalSide(_ view: UIView, superView: UIView, side: NSLayoutConstraint.Attribute, factor: CGFloat = 1) -> NSLayoutConstraint {
+        let constraint = NSLayoutConstraint(
+            item: view,
+            attribute: side,
+            relatedBy: .equal,
+            toItem: superView,
+            attribute: side,
+            multiplier: factor,
+            constant: 0
+        )
+        return constraint
     }
 }
 

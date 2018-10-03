@@ -22,36 +22,34 @@
 import UIKit
 import AVFoundation
 
-public class SPAudioPlayer: NSObject, AVAudioPlayerDelegate {
+public struct SPAudioPlayer {
     
-    fileprivate var player: AVAudioPlayer = AVAudioPlayer()
-    fileprivate var endPlayingComplection: (()->())? = nil
-    
-    func play(fileName: String, complection: (()->())? = nil) {
-        self.endPlayingComplection?()
-        self.player = AVAudioPlayer()
-        let url = Bundle.main.url(forResource: fileName, withExtension: nil)
-        if url == nil {
-            self.endPlayingComplection?()
-            return
+    fileprivate var player: AVAudioPlayer
+    var volume: Float {
+        didSet {
+            player.volume = volume
         }
+    }
+    var fileName: String = ""
+    
+    init(fileName: String, volume: Float = 1) {
+        self.volume = volume
+        player = AVAudioPlayer()
+        let url = Bundle.main.url(forResource: fileName, withExtension: nil)!
         do {
-            self.player = try AVAudioPlayer(contentsOf: url!)
-            player.volume = 1
-            player.delegate = self
+            self.player = try AVAudioPlayer(contentsOf: url)
+            player.volume = volume
             player.prepareToPlay()
-            player.play()
-            self.endPlayingComplection = complection
         } catch let error as NSError {
             print(error.description)
         }
     }
     
-    func stop() {
-        player.stop()
+    func prepareToPlay() {
+        player.prepareToPlay()
     }
-    
-    public func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        self.endPlayingComplection?()
+
+    func play() {
+        player.play()
     }
 }

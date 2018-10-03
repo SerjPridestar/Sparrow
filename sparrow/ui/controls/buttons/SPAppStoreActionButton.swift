@@ -65,16 +65,16 @@ class SPAppStoreActionButton: UIButton {
     private func commonInit() {
         self.style = .base
         self.layer.masksToBounds = true
-        self.contentEdgeInsets = UIEdgeInsetsMake(6, 15, 6, 15)
+		self.contentEdgeInsets = UIEdgeInsets(top: 6, left: 14, bottom: 6, right: 14)
     }
     
-    override func setTitle(_ title: String?, for state: UIControlState) {
+	override func setTitle(_ title: String?, for state: UIControl.State) {
         super.setTitle(title?.uppercased(), for: state)
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.rounded()
+        self.layer.cornerRadius = self.minSideSize() / 2
     }
     
     enum Style {

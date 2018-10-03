@@ -6,7 +6,7 @@ class SPDeepButton: UIButton {
     
     var sideSpace: CGFloat = 20 {
         didSet {
-            self.sizeToFit()
+            self.recalculateSize()
         }
     }
     
@@ -26,7 +26,7 @@ class SPDeepButton: UIButton {
     
     private func commonInit() {
         self.backgroundColor = UIColor.white
-        self.setTitle("Title", for: UIControlState.normal)
+		self.setTitle("Title", for: UIControl.State.normal)
         self.titleLabel?.font = UIFont.fonts.AvenirNext(type: .Bold, size: 14)
         self.setTitleColorForNoramlAndHightlightedStates(color: UIColor.blue)
         self.layer.cornerRadius = 4
@@ -57,8 +57,9 @@ class SPDeepButton: UIButton {
         })
     }
     
-    override func sizeToFit() {
-        super.sizeToFit()
+    func recalculateSize() {
+        self.sizeToFit()
+        self.titleLabel?.sizeToFit()
         self.frame = CGRect.init(
             x: 0, y: 0,
             width: (self.titleLabel?.frame.width ?? 0) + (2 * self.sideSpace),

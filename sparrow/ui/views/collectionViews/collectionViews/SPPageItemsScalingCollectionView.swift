@@ -21,22 +21,36 @@
 
 import UIKit
 
-public class SPTableViewCell<ContentView: UIView>: UITableViewCell {
+@available(iOS, unavailable)
+public class SPPageItemsScalingCollectionView: UICollectionView {
     
-    let view = ContentView.init()
-
-	public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.backgroundColor = UIColor.clear
-        self.addSubview(view)
-    }
+    //var layout = SPPageItemsScalingCollectionLayout()
+    var layout = SPCollectionViewLayout.init()
     
     required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
+        commonInit()
     }
     
-    override public func layoutSubviews() {
-        super.layoutSubviews()
-        self.view.setEqualsFrameFromBounds(self)
+    init(frame: CGRect) {
+        super.init(frame: frame, collectionViewLayout: self.layout)
+        commonInit()
+    }
+    
+    init() {
+        super.init(frame: CGRect.zero, collectionViewLayout: self.layout)
+        commonInit()
+    }
+    
+    fileprivate func commonInit() {
+        self.backgroundColor = UIColor.clear
+        self.collectionViewLayout = self.layout
+		self.decelerationRate = UIScrollView.DecelerationRate.fast
+        self.delaysContentTouches = false
+        self.isPagingEnabled = false
+        self.showsHorizontalScrollIndicator = false
+        self.showsVerticalScrollIndicator = false
     }
 }
+
+

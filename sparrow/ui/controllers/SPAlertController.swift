@@ -21,22 +21,22 @@
 
 import UIKit
 
-public class SPTableViewCell<ContentView: UIView>: UITableViewCell {
+struct SPAlert {
     
-    let view = ContentView.init()
-
-	public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.backgroundColor = UIColor.clear
-        self.addSubview(view)
-    }
-    
-    required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override public func layoutSubviews() {
-        super.layoutSubviews()
-        self.view.setEqualsFrameFromBounds(self)
+    static func showAlert(title: String, message: String, buttonTitle: String, complection: @escaping ()->() = {}, on viewController: UIViewController) {
+        let ac = UIAlertController(
+            title: title,
+            message: message,
+            preferredStyle: .alert
+        )
+        
+        ac.addAction(UIAlertAction.init(
+            title: buttonTitle,
+			style: UIAlertAction.Style.default,
+            handler: { (action) in
+                complection()
+        }))
+        
+        viewController.present(ac, animated: true, completion: nil)
     }
 }

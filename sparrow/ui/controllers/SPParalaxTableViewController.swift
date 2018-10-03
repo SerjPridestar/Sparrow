@@ -21,22 +21,31 @@
 
 import UIKit
 
-public class SPTableViewCell<ContentView: UIView>: UITableViewCell {
+public class SPParallaxTableViewController: UITableViewController {
     
-    let view = ContentView.init()
+    private var cellHeight: CGFloat = 240
 
-	public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.backgroundColor = UIColor.clear
-        self.addSubview(view)
+    override public func viewDidLoad() {
+        super.viewDidLoad()
+    }
+
+    // MARK: - Table view data source
+    override public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        fatalError("need emplementation in subclass")
     }
     
-    required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    override public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        fatalError("need emplementation in subclass")
     }
     
-    override public func layoutSubviews() {
-        super.layoutSubviews()
-        self.view.setEqualsFrameFromBounds(self)
+    override public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return self.cellHeight
+    }
+    
+    override public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        tableView.visibleCells.forEach { cell in
+            let parallaxCell = cell as! SPParallaxTableViewCell
+            parallaxCell.parallaxOffset(self.tableView)
+        }
     }
 }

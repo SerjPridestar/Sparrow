@@ -21,22 +21,26 @@
 
 import UIKit
 
-public class SPTableViewCell<ContentView: UIView>: UITableViewCell {
+public class SPIconsButton: SPRoundFrameButton {
     
-    let view = ContentView.init()
-
-	public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.backgroundColor = UIColor.clear
-        self.addSubview(view)
+    init(normalIconImage: UIImage?, highlightedIconImage: UIImage?) {
+        super.init(frame: CGRect.zero)
+        commonInit(normalIconImage, highlightedIconImage: highlightedIconImage)
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.commonInit()
     }
     
     required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
+        self.commonInit()
     }
     
-    override public func layoutSubviews() {
-        super.layoutSubviews()
-        self.view.setEqualsFrameFromBounds(self)
+    fileprivate func commonInit(_ normalIconImage: UIImage? = nil, highlightedIconImage: UIImage? = nil) {
+        self.backgroundColor = UIColor.clear
+		self.setImage(normalIconImage, for: UIControl.State.normal)
+		self.setImage(highlightedIconImage, for: UIControl.State.highlighted)
     }
 }
